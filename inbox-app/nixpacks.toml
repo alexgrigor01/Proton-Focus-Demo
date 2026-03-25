@@ -1,0 +1,13 @@
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+# Defining [phases.install] replaces the default Node install phase; without this, setup falls back to Node 18.
+[phases.setup]
+nixPkgs = ["nodejs_22", "npm-9_x"]
+
+[phases.install]
+dependsOn = ["setup"]
+cmds = [
+  "npm ci",
+  "npm install --no-save @rolldown/binding-linux-x64-gnu@1.0.0-rc.10",
+]
