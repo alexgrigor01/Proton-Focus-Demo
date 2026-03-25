@@ -237,7 +237,7 @@ function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showVi
           <span
             className="text-[11px] font-normal px-3 py-0.5"
             style={{
-              borderRadius: 8,
+              borderRadius: 4,
               background: 'rgba(115, 73, 255, 0.40)',
               color: '#DFD6FF',
             }}

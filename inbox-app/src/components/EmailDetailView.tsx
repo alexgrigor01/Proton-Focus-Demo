@@ -260,7 +260,7 @@ export function EmailDetailView({ email, onClose }: EmailDetailViewProps) {
                     <button
                       type="button"
                       onClick={() => setTagMenuOpen((o) => !o)}
-                      className="flex gap-1.5 items-center px-2 py-1 rounded-[8px] hover:brightness-110 transition-all"
+                      className="flex gap-1.5 items-center px-2 py-1 rounded-[4px] hover:brightness-110 transition-all"
                       style={{ background: '#3b2a77' }}
                     >
                       <Icon name={tag.icon} size={12} color="white" />

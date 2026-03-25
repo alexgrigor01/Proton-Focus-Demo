@@ -176,7 +176,7 @@ export function BundleView({
             <span
               className="text-[13px] font-normal px-4 py-1.5"
               style={{
-                borderRadius: 8,
+                borderRadius: 4,
                 background: 'rgba(115, 73, 255, 0.40)',
                 color: '#DFD6FF',
               }}
