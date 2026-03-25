@@ -1,0 +1,80 @@
+Yeah — the deck is mostly “values + process”, but it actually gives you a pretty clear blueprint for how to talk in a way Proton likes, and what the stages likely are.
+
+What the deck reveals (use these exact themes)
+Their mission language (mirror it)
+
+They repeat three layers: Vision / Purpose / Mission:
+
+“Build a better internet where privacy is the default”
+“Enable freedom online…”
+“Create trusted ways for people to be secure online and in control of their information”
+
+If you can echo that in your own words (without sounding like you copied it), you’ll instantly feel aligned.
+
+What they want to hear in “Why Proton”
+
+They explicitly position Proton as:
+
+No ads, no tracking, no data selling (“we don’t access, collect, or sell your data”)
+Community-funded + subscription revenue (so efficiency matters)
+Open source + independently audited + end-to-end encryption positioning
+
+So your strongest “Why Proton” angle is:
+
+“I like designing under privacy constraints where trust, clarity, and user control are the product.”
+
+Culture pillars = what they’ll probe for (even in recruiter call)
+
+They list pillars like: User-first, Be nimble, Own it, Get it done, Don’t waste money, It’s only possible together
+
+Recruiter won’t test design depth, but they will listen for signals that you:
+
+take ownership (“nothing is somebody else’s problem”)
+move fast and pragmatic
+collaborate well
+care about user trust
+The “crazy stages” — what they likely mean for you
+
+Their process slide shows:
+Meet Talent Partner → Meet Hiring Manager → (Home task/case study) → In-depth interviews → Final round → Offer
+And sometimes a logic task “for some roles”
+
+For Senior Product Designer, the practical interpretation is:
+
+This first call = fit + credibility + logistics
+Hiring manager = role match + how you think + what you’ve shipped
+Case/home task = your product thinking + craft + structure
+In-depth = deep portfolio + collaboration + edge cases + critique
+Final = leadership/values bar + “would we trust you with major surfaces”
+
+You can (and should) ask Daniel which of these apply to this role.
+
+How to prep for Daniel’s call using their own playbook
+
+They literally tell candidates to use STAR (Situation / Task / Action / Result)
+So go in with 4 short STAR stories ready (60–90 seconds each), each mapped to a pillar:
+
+Own it — time you took ambiguous scope and drove clarity
+User-first — time you reduced cognitive load / improved trust
+Be nimble / Get it done — time you shipped fast with constraints
+Together / Don’t waste money — time you aligned with eng + avoided waste (design system work is perfect)
+
+Keep results honest: if you don’t have hard metrics, say “qualitative outcome” or “pilot feedback” rather than inventing numbers.
+
+6 smart questions to ask Daniel (based on the deck)
+“Which stages from the deck apply to this role — is there a home task or logic task?”
+“What are you mainly assessing in the intro call vs the hiring manager round?”
+“What’s the team setup for Inbox — platform ownership (web/mobile/desktop)?”
+“How do you define Senior vs Staff at Proton in terms of scope and autonomy?”
+“What’s the expected working model for London/Paris/Barcelona?”
+“What would success look like in the first 3–6 months?”
+One more deck detail that’s useful psychologically
+
+They explicitly say: if you don’t understand a question, ask them to explain.
+That’s permission to slow down and clarify — which helps a lot under pressure.
+
+If you tell me which 1 case study you’ll lead with (Noa Inbox vs BTP design system vs something else), I’ll write you:
+
+a tight 90-second story
+4 STAR answers mapped to Proton pillars
+and a clean salary-range script that doesn’t box you in.

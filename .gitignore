@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+.env
+.env.*
+
+# App (see inbox-app/.gitignore for more)
+inbox-app/node_modules/
+inbox-app/dist/
+inbox-app/dist-ssr/

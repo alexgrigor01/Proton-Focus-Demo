@@ -1,0 +1,6 @@
+# Set Root Directory to `inbox-app` in Railway project settings if the repo root is the parent folder.
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npm run start"
