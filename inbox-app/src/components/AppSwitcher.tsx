@@ -1,8 +1,4 @@
 const imgGroup3 = 'https://www.figma.com/api/mcp/asset/ff547dcb-8256-4050-93da-15027f7080fb';
-const imgVector1 = 'https://www.figma.com/api/mcp/asset/106ec016-1aee-4d19-b23e-55e2828f66bd';
-const imgVector2 = 'https://www.figma.com/api/mcp/asset/86a9a1e2-b8c2-444e-af42-2f0f5368a27f';
-const imgVector3 = 'https://www.figma.com/api/mcp/asset/94fc7c23-ff3d-4ab0-84a0-a6318c7bd771';
-const imgVector4 = 'https://www.figma.com/api/mcp/asset/9984f235-f90b-4c48-be1d-f45451d86109';
 const imgGroup = 'https://www.figma.com/api/mcp/asset/cede5a92-5a31-4a11-955a-ea30fa797079';
 const imgGroup2 = 'https://www.figma.com/api/mcp/asset/8d6568cc-64f5-441b-b1b8-2fa11f7805b7';
 const imgIcChevronsLeft3 = 'https://www.figma.com/api/mcp/asset/2cb14cd6-c407-40b1-8344-1a8edbf2566f';
@@ -35,21 +31,8 @@ export function AppSwitcher() {
 
         {/* Calendar */}
         <AppIcon badge="21">
-          <div className="overflow-clip relative size-9">
-            <div className="absolute inset-y-1/4 left-[22%] right-[22%] contents">
-              <div className="absolute" style={{ inset: '41.67% 33.33% 30.56% 38.89%' }}>
-                <img src={imgVector1} alt="" className="absolute block max-w-none size-full" />
-              </div>
-              <div className="absolute inset-y-1/4 left-[22%] right-[22%]">
-                <img src={imgVector2} alt="" className="absolute block max-w-none size-full" />
-              </div>
-              <div className="absolute inset-y-1/4 left-[22%] right-[22%]">
-                <img src={imgVector3} alt="" className="absolute block max-w-none size-full" />
-              </div>
-              <div className="absolute inset-y-1/4 left-[22%] right-[22%]">
-                <img src={imgVector4} alt="" className="absolute block max-w-none size-full" />
-              </div>
-            </div>
+          <div className="overflow-clip relative size-9 flex items-center justify-center">
+            <img src="/calendar-icon.svg" alt="Calendar" className="block size-9 max-w-none object-contain" />
           </div>
         </AppIcon>
 

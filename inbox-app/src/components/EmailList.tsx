@@ -232,7 +232,7 @@ function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showVi
         <span className={`whitespace-nowrap font-medium ${isNow ? 'text-white text-[16px]' : 'text-white text-[14px]'}`}>
           {title}
         </span>
-        {count !== undefined && (
+        {count !== undefined && pill !== 'All caught up!' && (
           <span className="text-pm-text-muted text-[11px] font-medium">{count}</span>
         )}
         {pill && (

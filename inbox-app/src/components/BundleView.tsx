@@ -126,12 +126,11 @@ export function BundleView({
   const bundle = BUNDLES.find((b) => b.id === bundleId)!;
 
   const filteredEmails = bundle.emails.filter((e) => {
-    if (activeFilter === 'Read')   return e.isRead;
+    if (activeFilter === 'Read') return e.isRead;
     if (activeFilter === 'Unread') return !e.isRead;
+    if (activeFilter === 'Has attachments') return e.hasAttachment;
     return true;
   });
-
-  const totalCount = bundle.emails.length;
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -165,7 +164,7 @@ export function BundleView({
             <Icon name={bundle.icon} size={16} color="muted" />
             <span className="text-white font-medium whitespace-nowrap truncate">{bundle.title}</span>
             <span className="text-pm-text-muted text-[11px] font-medium shrink-0 tabular-nums">
-              {totalCount}
+              {filteredEmails.length}
             </span>
           </div>
         </div>
