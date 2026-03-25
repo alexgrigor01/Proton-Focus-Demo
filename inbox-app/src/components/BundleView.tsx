@@ -174,11 +174,11 @@ export function BundleView({
         {filteredEmails.length === 0 ? (
           <div className="flex items-center justify-center px-8 py-16">
             <span
-              className="text-[13px] font-normal px-4 py-1.5"
+              className="inline-flex items-center justify-center text-[11px] font-semibold px-1.5 py-1"
               style={{
                 borderRadius: 4,
                 background: 'rgba(115, 73, 255, 0.40)',
-                color: '#DFD6FF',
+                color: '#FFFFFF',
               }}
             >
               All caught up!
