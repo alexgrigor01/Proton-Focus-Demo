@@ -246,7 +246,6 @@ export function EmailDetailView({ email, onClose }: EmailDetailViewProps) {
                     <div className="flex gap-1.5 items-center">
                       <Icon name="ic-star" size={16} color="white" />
                       <Icon name="ic-inbox" size={16} color="white" />
-                      <Icon name="ic-paper-plane" size={16} color="white" />
                       <span className="text-white text-[12px] font-normal ml-1">{email.time}</span>
                     </div>
                     <Icon name="ic-chevron-down" size={16} color="white" className="cursor-pointer" />

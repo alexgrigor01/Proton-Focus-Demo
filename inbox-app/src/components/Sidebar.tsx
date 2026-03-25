@@ -108,7 +108,7 @@ export function Sidebar() {
 
         {/* Primary nav */}
         <div className="flex flex-col gap-1">
-          <NavItem icon="ic-inbox" label="Inbox" active count={16} showCount />
+          <NavItem icon="ic-inbox" label="Inbox" active count={15} showCount />
           <NavItem icon="ic-file-lines" label="Drafts" />
           <NavItem icon="ic-paper-plane" label="Sent" />
           <NavItem icon="ic-star" label="Starred" />
@@ -120,7 +120,7 @@ export function Sidebar() {
           <NavItem icon="ic-archive-box" label="Archive" />
           <NavItem icon="ic-fire" label="Spam" />
           <NavItem icon="ic-trash" label="Trash" />
-          <NavItem icon="ic-envelopes" label="All mail" count={16} showCount showRefresh={false} />
+          <NavItem icon="ic-envelopes" label="All mail" count={15} showCount showRefresh={false} />
         </div>
 
         {/* Views (second) */}

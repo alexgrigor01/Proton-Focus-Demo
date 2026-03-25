@@ -42,7 +42,16 @@ const rowActions = [
 ] as const;
 
 function EmailRow({ email, onClick }: { email: EmailData; onClick?: () => void }) {
-  const { avatar, avatarLetter, avatarBg = 'dark', sender, subject, time, isRead = false } = email;
+  const {
+    avatar,
+    avatarLetter,
+    avatarBg = 'dark',
+    sender,
+    subject,
+    time,
+    isRead = false,
+    hasAttachment = false,
+  } = email;
   const starColor: IconColor = isRead ? 'dim' : 'muted';
 
   return (
@@ -73,7 +82,9 @@ function EmailRow({ email, onClick }: { email: EmailData; onClick?: () => void }
 
       <div className="flex items-center">
         <div className="flex gap-3 items-center group-hover:hidden">
-          <Icon name="ic-paper-clip" size={16} color={isRead ? 'muted' : 'white'} />
+          {hasAttachment && (
+            <Icon name="ic-paper-clip" size={16} color={isRead ? 'muted' : 'white'} />
+          )}
           <span className={`text-[14px] whitespace-nowrap ${isRead ? 'text-pm-text-muted' : 'text-white'}`}>{time}</span>
         </div>
         <div className="hidden group-hover:flex gap-1 items-center">
@@ -147,8 +158,8 @@ export function BundleView({
             <Icon name="ic-arrow-left" size={16} color="white" />
           </button>
           <div className="flex items-center gap-2 min-w-0 text-[14px]">
-            <span className="text-pm-text-muted font-normal whitespace-nowrap">Focus</span>
-            <span className="text-pm-text-muted font-normal" aria-hidden>
+            <span className="text-pm-text-muted font-medium whitespace-nowrap">Focus</span>
+            <span className="text-pm-text-muted font-medium" aria-hidden>
               /
             </span>
             <Icon name={bundle.icon} size={16} color="muted" />

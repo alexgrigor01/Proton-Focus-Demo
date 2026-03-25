@@ -8,6 +8,9 @@ type InboxView = 'Regular' | 'Focus';
 
 type OverflowMenuVariant = 'inbox' | 'bundle';
 
+const TIME_RANGE_OPTIONS = ['Last 24 hours', 'Last 3 days', 'Last 7 days'] as const;
+type TimeRangeOption = (typeof TIME_RANGE_OPTIONS)[number];
+
 const inboxOverflowItems = [
   { icon: 'ic-trash',       label: 'Move all to trash',   dividerBefore: false },
   { icon: 'ic-archive-box', label: 'Move all to archive', dividerBefore: false },
@@ -39,10 +42,13 @@ export function InboxToolbar({
   const filterTabs: FilterTab[] = ['All', 'Read', 'Unread', 'Has attachments'];
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [timeRange, setTimeRange] = useState<TimeRangeOption>('Last 24 hours');
+  const [timeMenuOpen, setTimeMenuOpen] = useState(false);
+  const timeMenuRef = useRef<HTMLDivElement>(null);
   const isBundleOverflow = overflowMenuVariant === 'bundle';
   const n = bundleVisibleCount;
 
-  // Close on outside click
+  // Close overflow menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     function handleClick(e: MouseEvent) {
@@ -53,6 +59,18 @@ export function InboxToolbar({
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [menuOpen]);
+
+  // Close time range menu on outside click
+  useEffect(() => {
+    if (!timeMenuOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (timeMenuRef.current && !timeMenuRef.current.contains(e.target as Node)) {
+        setTimeMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [timeMenuOpen]);
 
   return (
     <div className={TOOLBAR_OUTER_CLASS}>
@@ -164,9 +182,45 @@ export function InboxToolbar({
 
         {/* Time filter — Focus only */}
         {activeView === 'Focus' && (
-          <div className="flex gap-2 items-center cursor-pointer">
-            <span className="text-pm-text-muted text-[14px]">Last 24 hours</span>
-            <Icon name="ic-chevron-down-filled" size={16} color="muted" />
+          <div className="relative shrink-0" ref={timeMenuRef}>
+            <button
+              type="button"
+              onClick={() => setTimeMenuOpen((o) => !o)}
+              className={`flex gap-2 items-center rounded-md px-1 py-0.5 -mx-1 transition-colors ${
+                timeMenuOpen ? 'bg-pm-bg-hover' : 'hover:bg-pm-bg-hover/60'
+              }`}
+              aria-expanded={timeMenuOpen}
+              aria-haspopup="listbox"
+            >
+              <span className="text-pm-text-muted text-[14px] font-normal whitespace-nowrap">{timeRange}</span>
+              <Icon name="ic-chevron-down-filled" size={16} color="muted" />
+            </button>
+
+            {timeMenuOpen && (
+              <div
+                className="absolute right-0 top-full mt-2 z-50 min-w-[200px] rounded-xl overflow-hidden shadow-2xl py-1"
+                role="listbox"
+                style={{ background: '#16141D', border: '1px solid #4C4659' }}
+              >
+                {TIME_RANGE_OPTIONS.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    role="option"
+                    aria-selected={timeRange === option}
+                    onClick={() => {
+                      setTimeRange(option);
+                      setTimeMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center px-4 py-3 text-left text-white text-[14px] font-normal transition-colors ${
+                      timeRange === option ? 'bg-white/[0.08]' : 'hover:bg-white/[0.06]'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

@@ -265,7 +265,7 @@ function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showVi
 
 const INITIAL_NOW_EMAILS: NowEmail[] = [
   { id: 'barclays',  avatar: imgBarclays,    avatarBg: 'dark',  sender: 'Barclays',     subject: 'Your account is overdrawn. Immediate action required!',          time: '3:00 PM',  isRead: false, hasAttachment: false, reason: 'time-sensitive' },
-  { id: 'johndoe',   avatarLetter: 'J',                         sender: 'John Doe',     subject: 'Hey! Just checking in. How have you been?',                      time: '2:58 PM',  isRead: false, hasAttachment: false, reason: 'recent reply thread' },
+  { id: 'johndoe',   avatarLetter: 'J',                         sender: 'John Doe',     subject: 'Hey! Just checking in. How have you been?',                      time: '2:58 PM',  isRead: false, hasAttachment: false, reason: 'VIP sender' },
   { id: 'thames',    avatar: imgThamesWater, avatarBg: 'dark',  sender: 'Thames Water', subject: 'Your utility bill is due in 5 days. Pay now to avoid late fees.', time: '2:41 PM',  isRead: false, hasAttachment: true,  reason: 'time-sensitive' },
   { id: 'calendar',  avatar: imgCalendar,    avatarBg: 'dark',  sender: 'Calendar',     subject: "Don't forget about the meeting tomorrow at 10 AM!",               time: '12:11 PM', isRead: false, hasAttachment: true,  reason: 'time-sensitive', label: 'Official', labelVisible: true },
   { id: 'slack',     avatar: imgSlack,       avatarBg: 'white', sender: 'Slack',        subject: "Don't forget the deadline for the project is next Friday!",       time: '11:19 AM', isRead: false, hasAttachment: false, reason: 'recent reply thread' },
@@ -299,6 +299,21 @@ function applyFilter<T extends { isRead?: boolean; hasAttachment?: boolean }>(em
   return emails;
 }
 
+// Parse strings like "2:32 PM" into minutes since midnight.
+function parseTimeToMinutes(time: string): number {
+  const match = time.trim().match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
+  if (!match) return 0;
+
+  const hours12 = Number(match[1]);
+  const minutes = Number(match[2]);
+  const period = match[3].toLowerCase();
+
+  let hours24 = hours12 % 12;
+  if (period === 'pm') hours24 += 12;
+
+  return hours24 * 60 + minutes;
+}
+
 interface EmailListProps {
   onViewBundle: (id: BundleId) => void;
   onEmailClick?: (email: SelectedEmail) => void;
@@ -319,7 +334,10 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
 
   const is = (id: SectionId) => openSection === id;
 
-  const filteredNow = applyFilter(nowEmails, activeFilter);
+  // Ensure the "Now" list is always newest -> oldest by time.
+  const filteredNow = applyFilter(nowEmails, activeFilter).sort(
+    (a, b) => parseTimeToMinutes(b.time) - parseTimeToMinutes(a.time)
+  );
   const nowEmpty = nowEmails.length === 0;
   const nowCollapsedCaughtUp = nowEmpty && !is('now');
 
