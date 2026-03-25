@@ -1,0 +1,17 @@
+# Monorepo root: install and build the Vite app in `inbox-app/` (Railway deploys from repo root).
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+[phases.setup]
+nixPkgs = ["nodejs_22", "npm-9_x"]
+
+[phases.install]
+dependsOn = ["setup"]
+cmds = [
+  "npm ci --prefix inbox-app",
+  "npm install --no-save --prefix inbox-app @rolldown/binding-linux-x64-gnu@1.0.0-rc.10",
+]
+
+[phases.build]
+dependsOn = ["install"]
+cmds = ["npm run build"]

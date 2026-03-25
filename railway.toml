@@ -1,0 +1,7 @@
+# Deploy from monorepo root: build/start scripts in root `package.json` delegate to `inbox-app/`.
+# In Railway dashboard, leave Root Directory empty (.) so this file and `nixpacks.toml` apply.
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npm run start"

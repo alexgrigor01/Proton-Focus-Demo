@@ -1,0 +1,11 @@
+{
+  "name": "proton-task",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix inbox-app",
+    "start": "npm run start --prefix inbox-app"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

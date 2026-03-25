@@ -1,4 +1,5 @@
-# Set Root Directory to `inbox-app` in Railway project settings if the repo root is the parent folder.
+# When the Git repo root is the monorepo (parent folder), use `/railway.toml` at repo root instead.
+# This file applies only if Railway Root Directory is set to `inbox-app`.
 [build]
 builder = "nixpacks"
 
