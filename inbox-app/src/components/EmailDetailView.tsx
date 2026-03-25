@@ -265,9 +265,9 @@ export function EmailDetailView({ email, onClose }: EmailDetailViewProps) {
                     >
                       <Icon name={tag.icon} size={12} color="white" />
                       <span className="text-white text-[10px] font-semibold">{tag.label}</span>
-                      <span className="text-white/50 text-[10px] select-none mx-0.5">·</span>
+                      <span className="text-white text-[10px] select-none mx-0.5">·</span>
                       <span className="text-white text-[10px] font-semibold">{reason}</span>
-                      <Icon name="ic-chevron-down-filled" size={14} color="white" className="ml-0.5 opacity-60" />
+                      <Icon name="ic-chevron-down-filled" size={14} color="white" className="ml-0.5" />
                     </button>
 
                     {/* Dropdown */}

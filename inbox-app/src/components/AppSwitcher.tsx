@@ -29,10 +29,12 @@ export function AppSwitcher() {
           </div>
         </AppIcon>
 
-        {/* Calendar */}
-        <AppIcon badge="21">
-          <div className="overflow-clip relative size-9 flex items-center justify-center">
-            <img src="/calendar-icon.svg" alt="Calendar" className="block size-9 max-w-none object-contain" />
+        {/* Calendar — same visual scale as mail/drive icons */}
+        <AppIcon>
+          <div className="overflow-clip relative size-9">
+            <div className="absolute inset-[20%]">
+              <img src="/calendar-icon.svg" alt="Calendar" className="absolute block max-w-none size-full object-contain" />
+            </div>
           </div>
         </AppIcon>
 

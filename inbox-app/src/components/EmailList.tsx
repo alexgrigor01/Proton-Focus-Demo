@@ -54,7 +54,7 @@ const imgJet2        = 'https://www.figma.com/api/mcp/asset/6998ce38-514c-41f4-b
 
 type SectionId = 'now' | 'social' | 'receipts' | 'notifications' | 'newsletters';
 
-/** Bundle accordion sections (excludes Now — Now is always expanded). */
+/** Bundle accordion sections (Now has separate open state, default expanded). */
 type BundleSectionId = Exclude<SectionId, 'now'>;
 
 const nowActions = [
@@ -113,7 +113,7 @@ function EmailRow({
   onClearFromNow,
   onClick,
 }: EmailRowProps) {
-  const starColor: IconColor = isRead ? 'dim' : 'muted';
+  const starColor: IconColor = isRead ? 'dim' : 'white';
   const actions = onClearFromNow ? nowActions : bundleActions;
 
   return (
@@ -222,9 +222,7 @@ interface SectionHeaderProps {
 function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showViewAll = false, isNow = false, pill }: SectionHeaderProps) {
   return (
     <div
-      className={`border-b border-pm-border flex items-center justify-between px-4 py-3 select-none transition-colors bg-pm-bg hover:bg-pm-bg-hover/40 ${
-        isNow ? 'cursor-default' : 'cursor-pointer'
-      }`}
+      className="border-b border-pm-border flex items-center justify-between px-4 py-3 select-none transition-colors bg-pm-bg hover:bg-pm-bg-hover/40 cursor-pointer"
       onClick={onToggle}
     >
       <div className="flex gap-3 items-center">
@@ -261,7 +259,7 @@ function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showVi
           className="transition-transform duration-200"
           style={{ transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)' }}
         >
-          <Icon name="ic-chevron-down-filled" size={16} color={isNow ? 'white' : 'muted'} />
+          <Icon name="ic-chevron-down-filled" size={16} color="muted" />
         </div>
       </div>
     </div>
@@ -326,8 +324,9 @@ interface EmailListProps {
 }
 
 export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: EmailListProps) {
-  /** At most one bundle accordion open; Now is always expanded (not tracked here). */
+  /** At most one bundle accordion open; Now expand/collapse is independent. */
   const [openBundle, setOpenBundle] = useState<BundleSectionId | null>(null);
+  const [nowOpen, setNowOpen] = useState(true);
   const [nowEmails, setNowEmails] = useState<NowEmail[]>(INITIAL_NOW_EMAILS);
 
   function toggleBundle(id: BundleSectionId) {
@@ -369,18 +368,19 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
   return (
     <div className="flex flex-col w-full overflow-y-auto">
 
-      {/* ─── NOW SECTION (always expanded) ─── */}
-      <div className="border-b-2 border-pm-purple">
+      {/* ─── NOW SECTION ─── */}
+      <div className={nowOpen ? 'border-b-2 border-pm-purple' : ''}>
         <SectionHeader
           icon="ic-bolt"
           title="Now"
-          count={nowEmpty ? undefined : nowFilteredCount}
-          isOpen
-          onToggle={() => {}}
+          count={nowFilteredCount}
+          isOpen={nowOpen}
+          onToggle={() => setNowOpen((o) => !o)}
           isNow
-          pill={nowEmpty ? 'All caught up!' : undefined}
+          pill={nowEmpty && !nowOpen ? 'All caught up!' : undefined}
         />
-        <>
+        {nowOpen && (
+            <>
             {nowEmails.length === 0 ? (
               <div className="bg-pm-bg-elevated flex items-center justify-center px-8 py-12">
                 <p className="text-pm-text-muted text-base font-normal leading-normal text-center">
@@ -412,7 +412,8 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
                 />
               ))
             )}
-        </>
+            </>
+        )}
       </div>
 
       {/* ─── BUNDLES SEPARATOR ─── */}

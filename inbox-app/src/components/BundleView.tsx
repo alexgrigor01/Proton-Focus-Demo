@@ -52,7 +52,7 @@ function EmailRow({ email, onClick }: { email: EmailData; onClick?: () => void }
     isRead = false,
     hasAttachment = false,
   } = email;
-  const starColor: IconColor = isRead ? 'dim' : 'muted';
+  const starColor: IconColor = isRead ? 'dim' : 'white';
 
   return (
     <div

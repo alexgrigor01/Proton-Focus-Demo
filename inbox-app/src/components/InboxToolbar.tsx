@@ -9,7 +9,6 @@ type InboxView = 'Regular' | 'Focus';
 type OverflowMenuVariant = 'inbox' | 'bundle';
 
 const TIME_RANGE_OPTIONS = ['Last 24 hours', 'Last 3 days', 'Last 7 days'] as const;
-type TimeRangeOption = (typeof TIME_RANGE_OPTIONS)[number];
 
 const inboxOverflowItems = [
   { icon: 'ic-trash',       label: 'Move all to trash',   dividerBefore: false },
@@ -42,7 +41,6 @@ export function InboxToolbar({
   const filterTabs: FilterTab[] = ['All', 'Read', 'Unread', 'Has attachments'];
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [timeRange, setTimeRange] = useState<TimeRangeOption>('Last 24 hours');
   const [timeMenuOpen, setTimeMenuOpen] = useState(false);
   const timeMenuRef = useRef<HTMLDivElement>(null);
   const isBundleOverflow = overflowMenuVariant === 'bundle';
@@ -192,7 +190,7 @@ export function InboxToolbar({
               aria-expanded={timeMenuOpen}
               aria-haspopup="listbox"
             >
-              <span className="text-pm-text-muted text-[14px] font-normal whitespace-nowrap">{timeRange}</span>
+              <span className="text-pm-text-muted text-[14px] font-normal whitespace-nowrap">Last 24 hours</span>
               <Icon name="ic-chevron-down-filled" size={16} color="muted" />
             </button>
 
@@ -207,14 +205,8 @@ export function InboxToolbar({
                     key={option}
                     type="button"
                     role="option"
-                    aria-selected={timeRange === option}
-                    onClick={() => {
-                      setTimeRange(option);
-                      setTimeMenuOpen(false);
-                    }}
-                    className={`flex w-full items-center px-4 py-3 text-left text-white text-[14px] font-normal transition-colors ${
-                      timeRange === option ? 'bg-white/[0.08]' : 'hover:bg-white/[0.06]'
-                    }`}
+                    onClick={() => setTimeMenuOpen(false)}
+                    className="flex w-full items-center px-4 py-3 text-left text-white text-[14px] font-normal transition-colors hover:bg-white/[0.06]"
                   >
                     {option}
                   </button>

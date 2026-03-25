@@ -99,7 +99,7 @@ function RegularEmailRow({
   onClick?: () => void;
 }) {
   const { avatar, avatarLetter, avatarBg = 'dark', sender, subject, time, isRead = false, hasAttachment = false, label, labelVisible = false } = email;
-  const starColor: IconColor = isRead ? 'dim' : 'muted';
+  const starColor: IconColor = isRead ? 'dim' : 'white';
 
   return (
     <div
