@@ -54,6 +54,9 @@ const imgJet2        = 'https://www.figma.com/api/mcp/asset/6998ce38-514c-41f4-b
 
 type SectionId = 'now' | 'social' | 'receipts' | 'notifications' | 'newsletters';
 
+/** Bundle accordion sections (excludes Now — Now is always expanded). */
+type BundleSectionId = Exclude<SectionId, 'now'>;
+
 const nowActions = [
   { icon: 'ic-checkmark-circle', title: 'Clear from Now', isClear: true },
   { icon: 'ic-envelope-open',    title: 'Mark read',       isClear: false },
@@ -219,7 +222,9 @@ interface SectionHeaderProps {
 function SectionHeader({ icon, title, count, isOpen, onToggle, onViewAll, showViewAll = false, isNow = false, pill }: SectionHeaderProps) {
   return (
     <div
-      className="border-b border-pm-border flex items-center justify-between px-4 py-3 cursor-pointer select-none transition-colors bg-pm-bg hover:bg-pm-bg-hover/40"
+      className={`border-b border-pm-border flex items-center justify-between px-4 py-3 select-none transition-colors bg-pm-bg hover:bg-pm-bg-hover/40 ${
+        isNow ? 'cursor-default' : 'cursor-pointer'
+      }`}
       onClick={onToggle}
     >
       <div className="flex gap-3 items-center">
@@ -321,25 +326,31 @@ interface EmailListProps {
 }
 
 export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: EmailListProps) {
-  const [openSection, setOpenSection] = useState<SectionId | null>('now');
+  /** At most one bundle accordion open; Now is always expanded (not tracked here). */
+  const [openBundle, setOpenBundle] = useState<BundleSectionId | null>(null);
   const [nowEmails, setNowEmails] = useState<NowEmail[]>(INITIAL_NOW_EMAILS);
 
-  function toggle(id: SectionId) {
-    setOpenSection((prev) => (prev === id ? null : id));
+  function toggleBundle(id: BundleSectionId) {
+    setOpenBundle((prev) => (prev === id ? null : id));
   }
 
   function clearFromNow(id: string) {
     setNowEmails((prev) => prev.filter((e) => e.id !== id));
   }
 
-  const is = (id: SectionId) => openSection === id;
+  const isBundleOpen = (id: BundleSectionId) => openBundle === id;
 
   // Ensure the "Now" list is always newest -> oldest by time.
   const filteredNow = applyFilter(nowEmails, activeFilter).sort(
     (a, b) => parseTimeToMinutes(b.time) - parseTimeToMinutes(a.time)
   );
   const nowEmpty = nowEmails.length === 0;
-  const nowCollapsedCaughtUp = nowEmpty && !is('now');
+  const nowFilteredCount = applyFilter(nowEmails, activeFilter).length;
+
+  const socialRows = applyFilter(BUNDLE_PREVIEWS.social, activeFilter);
+  const receiptsRows = applyFilter(BUNDLE_PREVIEWS.receipts, activeFilter);
+  const notificationsRows = applyFilter(BUNDLE_PREVIEWS.notifications, activeFilter);
+  const newslettersRows = applyFilter(BUNDLE_PREVIEWS.newsletters, activeFilter);
 
   function makeEmailPayload(e: NowEmail, context: SelectedEmail['context']): SelectedEmail {
     return {
@@ -358,19 +369,18 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
   return (
     <div className="flex flex-col w-full overflow-y-auto">
 
-      {/* ─── NOW SECTION ─── */}
-      <div className={`border-b-2 ${is('now') ? 'border-pm-purple' : 'border-pm-border'}`}>
+      {/* ─── NOW SECTION (always expanded) ─── */}
+      <div className="border-b-2 border-pm-purple">
         <SectionHeader
           icon="ic-bolt"
           title="Now"
-          count={nowEmpty ? undefined : nowEmails.length}
-          isOpen={is('now')}
-          onToggle={() => toggle('now')}
+          count={nowEmpty ? undefined : nowFilteredCount}
+          isOpen
+          onToggle={() => {}}
           isNow
-          pill={nowCollapsedCaughtUp ? 'All caught up!' : undefined}
+          pill={nowEmpty ? 'All caught up!' : undefined}
         />
-        {is('now') && (
-          <>
+        <>
             {nowEmails.length === 0 ? (
               <div className="bg-pm-bg-elevated flex items-center justify-center px-8 py-12">
                 <p className="text-pm-text-muted text-base font-normal leading-normal text-center">
@@ -402,8 +412,7 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
                 />
               ))
             )}
-          </>
-        )}
+        </>
       </div>
 
       {/* ─── BUNDLES SEPARATOR ─── */}
@@ -420,80 +429,75 @@ export function EmailList({ onViewBundle, onEmailClick, activeFilter = 'All' }: 
         <SectionHeader
           icon="ic-users"
           title="Social"
-          count={3}
-          isOpen={is('social')}
-          onToggle={() => toggle('social')}
+          count={socialRows.length}
+          isOpen={isBundleOpen('social')}
+          onToggle={() => toggleBundle('social')}
           showViewAll
           onViewAll={() => onViewBundle('social')}
         />
-        {is('social') && (() => {
-          const rows = applyFilter(BUNDLE_PREVIEWS.social, activeFilter);
-          return rows.length === 0
+        {isBundleOpen('social') && (socialRows.length === 0
             ? <div className="bg-pm-bg-dark flex items-center justify-center px-8 py-4">
                 <p className="text-pm-text-muted text-[13px] font-normal text-center">No messages match this filter.</p>
               </div>
-            : rows.map((e) => (
+            : socialRows.map((e) => (
                 <EmailRow key={e.id} avatar={e.avatar} avatarBg={e.avatarBg} sender={e.sender} subject={e.subject}
                   time={e.time} isRead={e.isRead} hasAttachment={e.hasAttachment} compact
                   onClick={() => onEmailClick?.({ avatar: e.avatar, avatarBg: e.avatarBg, sender: e.sender, subject: e.subject, time: e.time, isRead: e.isRead, context: 'social', reason: 'Sender type' })} />
-              ));
-        })()}
+              ))
+        )}
 
         {/* Receipts */}
         <SectionHeader
           icon="ic-pass-cheque"
           title="Receipts"
-          count={3}
-          isOpen={is('receipts')}
-          onToggle={() => toggle('receipts')}
+          count={receiptsRows.length}
+          isOpen={isBundleOpen('receipts')}
+          onToggle={() => toggleBundle('receipts')}
           showViewAll
           onViewAll={() => onViewBundle('receipts')}
         />
-        {is('receipts') && (() => {
-          const rows = applyFilter(BUNDLE_PREVIEWS.receipts, activeFilter);
-          return rows.length === 0
+        {isBundleOpen('receipts') && (receiptsRows.length === 0
             ? <div className="bg-pm-bg-dark flex items-center justify-center px-8 py-4">
                 <p className="text-pm-text-muted text-[13px] font-normal text-center">No messages match this filter.</p>
               </div>
-            : rows.map((e) => (
+            : receiptsRows.map((e) => (
                 <EmailRow key={e.id} avatar={e.avatar} avatarBg={e.avatarBg} sender={e.sender} subject={e.subject}
                   time={e.time} isRead={e.isRead} hasAttachment={e.hasAttachment} compact
                   onClick={() => onEmailClick?.({ avatar: e.avatar, avatarBg: e.avatarBg, sender: e.sender, subject: e.subject, time: e.time, isRead: e.isRead, context: 'receipts', reason: 'Sender type' })} />
-              ));
-        })()}
+              ))
+        )}
 
         {/* Notifications */}
         <SectionHeader
           icon="ic-bell-2"
           title="Notifications"
-          count={3}
-          isOpen={is('notifications')}
-          onToggle={() => toggle('notifications')}
+          count={notificationsRows.length}
+          isOpen={isBundleOpen('notifications')}
+          onToggle={() => toggleBundle('notifications')}
           showViewAll
           onViewAll={() => onViewBundle('notifications')}
         />
-        {is('notifications') && (() => {
-          const rows = applyFilter(BUNDLE_PREVIEWS.notifications, activeFilter);
-          return rows.length === 0
+        {isBundleOpen('notifications') && (notificationsRows.length === 0
             ? <div className="bg-pm-bg-dark flex items-center justify-center px-8 py-4">
                 <p className="text-pm-text-muted text-[13px] font-normal text-center">No messages match this filter.</p>
               </div>
-            : rows.map((e) => (
+            : notificationsRows.map((e) => (
                 <EmailRow key={e.id} avatar={e.avatar} avatarBg={e.avatarBg} sender={e.sender} subject={e.subject}
                   time={e.time} isRead={e.isRead} hasAttachment={e.hasAttachment} compact
                   onClick={() => onEmailClick?.({ avatar: e.avatar, avatarBg: e.avatarBg, sender: e.sender, subject: e.subject, time: e.time, isRead: e.isRead, context: 'notifications', reason: 'Sender type' })} />
-              ));
-        })()}
+              ))
+        )}
 
         {/* Newsletters — empty */}
         <SectionHeader
           icon="ic-envelope-check"
           title="Newsletters"
-          isOpen={is('newsletters')}
-          onToggle={() => toggle('newsletters')}
-          pill={!is('newsletters') ? 'All caught up!' : undefined}
+          count={newslettersRows.length}
+          isOpen={isBundleOpen('newsletters')}
+          onToggle={() => toggleBundle('newsletters')}
+          pill={!isBundleOpen('newsletters') ? 'All caught up!' : undefined}
         />
-        {is('newsletters') && (
+        {isBundleOpen('newsletters') && (
           <div className="bg-pm-bg-elevated flex items-center justify-center px-8 py-12">
             <p className="text-pm-text-muted text-base font-normal leading-normal text-center">
               All caught up on newsletters!
