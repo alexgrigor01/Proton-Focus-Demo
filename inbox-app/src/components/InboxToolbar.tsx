@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Icon } from './Icon';
 import { TOOLBAR_LEFT_SEGMENT_CLASS, TOOLBAR_OUTER_CLASS, TOOLBAR_INNER_ROW_CLASS } from '../constants/toolbarLayout';
-import { FOCUS_TOOLBAR_CHECKBOX_IMG } from '../constants/focusToolbarAssets';
 
 type FilterTab = 'All' | 'Read' | 'Unread' | 'Has attachments';
 type InboxView = 'Regular' | 'Focus';
@@ -75,9 +74,13 @@ export function InboxToolbar({
       {/* Top row */}
       <div className={TOOLBAR_INNER_ROW_CLASS}>
         <div className={TOOLBAR_LEFT_SEGMENT_CLASS}>
-          {/* Checkbox */}
+          {/* Checkbox + chevron (bundled SVG) */}
           <div className="h-5 relative w-[34px] shrink-0">
-            <img src={FOCUS_TOOLBAR_CHECKBOX_IMG} alt="" className="absolute block max-w-none size-full" />
+            <img
+              src="/problematic-icons/inbox-toolbar-checkbox.svg"
+              alt=""
+              className="absolute block max-w-none size-full object-contain object-left"
+            />
           </div>
 
           {/* Title */}

@@ -1,7 +1,5 @@
 import { Icon } from './Icon';
 
-const imgProtonLogo = 'https://www.figma.com/api/mcp/asset/f6307ac2-bb25-4827-909c-dddfc1adf078';
-
 interface NavItemProps {
   icon: string;
   label: string;
@@ -91,9 +89,9 @@ export function Sidebar() {
         {/* Logo + grid icon */}
         <div className="flex items-center justify-between w-full px-1">
           <img
-            src={imgProtonLogo}
+            src="/problematic-icons/logo.svg"
             alt="Proton Mail"
-            style={{ width: 134, height: 36, objectFit: 'contain', objectPosition: 'left', flexShrink: 0 }}
+            className="h-9 w-auto max-w-[134px] object-contain object-left shrink-0"
           />
           <Icon name="ic-grid-2" size={18} color="muted" />
         </div>

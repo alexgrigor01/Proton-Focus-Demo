@@ -1,7 +1,4 @@
-const imgGroup3 = 'https://www.figma.com/api/mcp/asset/ff547dcb-8256-4050-93da-15027f7080fb';
-const imgGroup = 'https://www.figma.com/api/mcp/asset/cede5a92-5a31-4a11-955a-ea30fa797079';
-const imgGroup2 = 'https://www.figma.com/api/mcp/asset/8d6568cc-64f5-441b-b1b8-2fa11f7805b7';
-const imgIcChevronsLeft3 = 'https://www.figma.com/api/mcp/asset/2cb14cd6-c407-40b1-8344-1a8edbf2566f';
+import { Icon } from './Icon';
 
 function AppIcon({ children, badge }: { children: React.ReactNode; badge?: string | number }) {
   return (
@@ -23,8 +20,12 @@ export function AppSwitcher() {
         {/* Mail (active) */}
         <AppIcon>
           <div className="overflow-clip relative size-9">
-            <div className="absolute inset-y-1/4 left-[22%] right-[22%]">
-              <img src={imgGroup3} alt="Mail" className="absolute block max-w-none size-full" />
+            <div className="absolute inset-0">
+              <img
+                src="/problematic-icons/app-switcher-top.svg"
+                alt=""
+                className="absolute block max-w-none size-full object-contain"
+              />
             </div>
           </div>
         </AppIcon>
@@ -40,16 +41,26 @@ export function AppSwitcher() {
 
         {/* Drive */}
         <div className="relative shrink-0 size-9 cursor-pointer">
-          <div className="absolute" style={{ inset: '22.22% 21.21% 22.22% 23.23%' }}>
-            <img src={imgGroup} alt="Drive" className="absolute block max-w-none size-full" />
+          <div className="overflow-clip relative size-9">
+            <div className="absolute inset-0">
+              <img
+                src="/problematic-icons/app-switcher-pre-last.svg"
+                alt=""
+                className="absolute block max-w-none size-full object-contain"
+              />
+            </div>
           </div>
         </div>
 
         {/* VPN */}
         <AppIcon>
           <div className="overflow-clip relative size-9">
-            <div className="absolute" style={{ bottom: '25%', left: '23%', right: '22%', top: '25%' }}>
-              <img src={imgGroup2} alt="VPN" className="absolute block max-w-none size-full" />
+            <div className="absolute inset-0">
+              <img
+                src="/problematic-icons/app-switcher-last.svg"
+                alt=""
+                className="absolute block max-w-none size-full object-contain"
+              />
             </div>
           </div>
         </AppIcon>
@@ -57,8 +68,8 @@ export function AppSwitcher() {
 
       {/* Expand button */}
       <div className="flex items-center justify-center rotate-180 cursor-pointer">
-        <div className="relative size-[46px]">
-          <img src={imgIcChevronsLeft3} alt="Expand" className="absolute block max-w-none size-full" />
+        <div className="size-[46px] flex items-center justify-center">
+          <Icon name="ic-chevrons-left" size={16} color="muted" />
         </div>
       </div>
     </div>
