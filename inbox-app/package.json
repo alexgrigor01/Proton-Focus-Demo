@@ -8,12 +8,14 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "build": "npm run verify:assets && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.2.8",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

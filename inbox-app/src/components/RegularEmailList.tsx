@@ -2,24 +2,26 @@ import { useState } from 'react';
 import { Icon } from './Icon';
 import type { IconColor } from './Icon';
 import type { SelectedEmail } from '../types';
+import { EMAIL_AVATAR } from '../constants/emailAvatars';
 
 type FilterTab = 'All' | 'Read' | 'Unread' | 'Has attachments';
 
-// ── Avatar assets (same as EmailList.tsx) ───────────────
-const imgBarclays    = 'https://www.figma.com/api/mcp/asset/ad3ed310-80c6-41da-b799-31ca90442ebe';
-const imgThamesWater = 'https://www.figma.com/api/mcp/asset/269ee063-a492-4895-b53e-4ca7702ded99';
-const imgNotion      = 'https://www.figma.com/api/mcp/asset/434eaae1-f46a-4695-8204-fa7ad0c6d7a9';
-const imgCalendar    = 'https://www.figma.com/api/mcp/asset/dd657b41-8410-475d-a149-1391a056c63c';
-const imgSlack       = 'https://www.figma.com/api/mcp/asset/85f105d9-4593-4c71-9b71-74c583a7ba09';
-const imgFacebook    = 'https://www.figma.com/api/mcp/asset/0668bcc6-3ac9-489a-ab2d-4ce28c9ebc3a';
-const imgLinkedIn    = 'https://www.figma.com/api/mcp/asset/1b9f6345-6f81-4806-aa48-8ac1a0452038';
-const imgStrava      = 'https://www.figma.com/api/mcp/asset/54e54512-2598-4ccf-aae3-d04530ee5526';
-const imgAmazon      = 'https://www.figma.com/api/mcp/asset/8d66fc2c-a3a3-4f02-9c22-56931b7fef67';
-const imgLloyds      = 'https://www.figma.com/api/mcp/asset/a4ee4923-c69b-429a-b41c-87c7131a3753';
-const imgTesco       = 'https://www.figma.com/api/mcp/asset/f3254800-5a50-4e36-9018-8e602f91fb15';
-const imgWeather     = 'https://www.figma.com/api/mcp/asset/a6e92f1a-2679-4cd7-a846-2e4bc2b9d811';
-const imgGovPortal   = 'https://www.figma.com/api/mcp/asset/195558f0-6ed1-4e3a-b93d-2a2713ca120b';
-const imgJet2        = 'https://www.figma.com/api/mcp/asset/6998ce38-514c-41f4-b68a-685136685ad2';
+const {
+  barclays: imgBarclays,
+  thamesWater: imgThamesWater,
+  notion: imgNotion,
+  calendar: imgCalendar,
+  slack: imgSlack,
+  facebook: imgFacebook,
+  linkedin: imgLinkedIn,
+  strava: imgStrava,
+  amazon: imgAmazon,
+  lloyds: imgLloyds,
+  tesco: imgTesco,
+  weather: imgWeather,
+  govPortal: imgGovPortal,
+  jet2: imgJet2,
+} = EMAIL_AVATAR;
 
 interface RegularEmail {
   id: string;
